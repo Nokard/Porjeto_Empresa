@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+        <table class="table">
+                <thead>
+                    
+                    <th>CNPJ</th>
+                    <th>MATRIZFILIAL</th>
+                    <th>RAZAO SOCIAL</th>
+                    <th>SITUACAO </th>
+                    
+                </thead>
+                <tbody>
+                    {% for emp in Empresas %}
+                   <tr>           
+                      
+                        <td><a href="{% url ' lista_cnpj ' emp.pk %}"> {{emp.cnpj }} </a></td>                       
+                        <td>{{ emp.matrizfilial }}</td>
+                        <td>{{ emp.nm }} </td>
+                        <td>{{ emp.situacao }} </td>                
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        
+          </div>
+</div>
+{% endblock %}

@@ -1,0 +1,1 @@
+C:\Users\admin\Desktop\Projeto_empresa\django-vue\env\Scrips\activate

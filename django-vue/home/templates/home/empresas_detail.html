@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<p>View cnpj</p>
+
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">CNPJ</th>
+                <th scope="col">NOME FANTASIA</th>
+                <th scope="col">ENDERECO</th>
+                <th scope="col">PORTE</th>
+                <th scope="col">SITUACAO</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ object.cnpj }}</td>
+                <td>{{ object.nm }}</td>
+                <td>{{ object.lg }}</td>
+                <td>{{ object.porte }}</td>
+                <td>{{ object.situacao }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+{% endblock %}
