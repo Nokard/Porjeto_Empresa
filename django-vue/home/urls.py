@@ -8,7 +8,7 @@ app_name = 'home'
 urlpatterns = [
     path('', index, name="index"),
     #path('/home/empresas', empresas, name="empresas"),
-    path('CNPJ/<int:pk>/', views.listarCnpjView.as_view(), name="lista_cnpj"),
+    path('CNPJ/<int:pk>/', views.listarCnpjView.as_view()),
     path('', views.EmpresasList.as_view()),
 
 ]
