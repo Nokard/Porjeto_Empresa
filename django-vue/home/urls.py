@@ -18,7 +18,7 @@ urlpatterns = [
     
     path('INDEX/LOGOUT/', do_logout, name='do_logout'), 
     
-    path('REGISTER', views.cadastre, name='cadastre')
+    path('REGISTER/', views.cadastre, name='cadastre'),
     #path('CADASTRO/', views.cadastro, name="cadastro"),
 
 ]
