@@ -1,39 +1,49 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<p>View cnpj</p>
+<p>{{ object.nm }}</p>
 
-<form>
-    <div class="form-group row">
-        <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Email</label>
-        <div class="col-sm-10">
-            <input type="email" class="form-control form-control-sm" id="colFormLabelSm" placeholder=" {{ object.cnpj }}" readonly>
-        </div>
-    </div>
-    
-    </div>
-</form>
 
     <table class="table table-hover">
         <thead>
             <tr>
                 <th scope="col">CNPJ</th>
-                <th scope="col">NOME FANTASIA</th>
-                <th scope="col">ENDERECO</th>
-                <th scope="col">PORTE</th>
+                
                 <th scope="col">SITUACAO</th>
             </tr>
         </thead>
         <tbody>
             <tr>
+                <!-- Colocando o icone verde se a Situação é ATIVA-->
                 <td>{{ object.cnpj }}</td>
-                <td>{{ object.nm }}</td>
-                <td>{{ object.lg }}</td>
-                <td>{{ object.porte }}</td>
-                <td>{{ object.situacao }}</td>
+                {% if object.situacao == 'ATIVA' %}                              
+                <td><span class="badge badge-success">{{ object.situacao }}</span></td>
+                {% else %}
+                <td><span class="badge badge-danger">{{ object.situacao }}</span></td>
+                {% endif %}  
             </tr>
         </tbody>
     </table>
+
+    <div class="form-row">
+        <div class="col-md-4 mb-3">
+            <label for="validationCustom01" class="active">Nome Fantasia</label>
+            <input type="text" class="form-control" id="validationCustom01" placeholder="First name" value={{ object.nmf }} readonly>
+            
+        </div>
+        <div class="col-md-4 mb-2">
+            <label for="validationCustom02" class="active">Porte</label>
+            <input type="text" class="form-control" id="validationCustom02" placeholder="Last name" value={{ object.porte }} readonly>
+            
+        </div>
+        <div class="col-md-4 mb-2">
+            
+            <label for="validationCustom02" class="active">UF</label>
+                <input type="text" class="form-control" id="validationCustomUsername" placeholder={{ object.uf }} aria-describedby="inputGroupPrepend" readonly>
+                
+            </div>
+        </div>
+    </div>
 
 
 

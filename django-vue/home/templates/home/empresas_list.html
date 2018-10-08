@@ -1,33 +1,33 @@
 {% extends "layout.html" %}
+
+
 {% block content %}
-
-
-
-
 <div class="container">
-        <table class="table">
-                <thead  class="thead-light">
-                    
-                    <th>CNPJ</th>
-                    <th>MATRIZFILIAL</th>
-                    <th>RAZAO SOCIAL</th>
-                    <th>SITUACAO </th>
-
-                    
-                </thead>
-                <tbody>
-                    {% for emp in Empresas %}
-                   <tr>           
-                      
-                        <td><a href="CNPJ/{{emp.pk }}">{{emp.cnpj }}</a></td>                       
-                        <td>{{ emp.matrizfilial }}</td>
-                        <td>{{ emp.nm }} </td>
-                        <td>{{ emp.situacao }} </td>                
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        
-          </div>
-</div>
+        <div class="card">
+         <div class="cardbody">
+            <table class="table table-datatable table-responsive">
+                    <thead>
+                        
+                        <th>CNPJ</th>
+                        
+                        <th>RAZAO SOCIAL</th>
+                        
+                        
+                    </thead>
+                    <tbody>
+                        {% for emp in Empresas %}
+                       <tr>           
+                          
+                            <td><a href="{% url 'home:emp_detail' pk=emp.id %}"><span class="badge badge-primary">{{ emp.cnpj }}</span></td>
+                            
+                            <td>{{ emp.nm }} </td>
+                                          
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            
+              </div>
+            </div>
+        </div>
 {% endblock %}
