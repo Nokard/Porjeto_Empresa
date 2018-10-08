@@ -13,11 +13,12 @@ urlpatterns = [
     path('', views.pesquisar, name="pesquisar"), 
 
     path('<int:pk>/', views.listarCnpjView.as_view(), name='emp_detail'),
-    
-    
+        
     path('LOGIN/', LoginView.as_view(), name='login'),
+    
     path('INDEX/LOGOUT/', do_logout, name='do_logout'), 
     
+    path('REGISTER', views.cadastre, name='cadastre')
     #path('CADASTRO/', views.cadastro, name="cadastro"),
 
 ]

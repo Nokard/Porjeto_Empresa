@@ -15,6 +15,10 @@ from .models import Empresas
 def first(request):
     return render(request, 'home/index.html')
 
+def cadastre(request):
+    return render(request, 'home/cadastro.html')
+
+
 @login_required
 class EmpresasList(ListView):
     model = Empresas
@@ -30,7 +34,9 @@ def pesquisar(request):
     if pesquisa:
         pesquisa = re.sub(r"\D", "", pesquisa)        
         emp = Empresas.objects.filter(doc=pesquisa)   
-        return render(request, 'home/index.html', {'Empresas': emp})
+        return render(request, 'home/empresas_list.html', {'Empresas': emp})
+    else:
+       return redirect('index')
 
 
 #Funcão para mostrar os detalhes do CNPJ
