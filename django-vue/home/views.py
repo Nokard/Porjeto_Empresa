@@ -6,17 +6,26 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
+from .forms import Register
 
 
 from .models import Empresas
-
 
 #PAGINA INICIAL
 def first(request):
     return render(request, 'home/index.html')
 
+
+#Funcao para logout
+def do_logout(request):
+    logout(request)
+    return render(request, 'home/index.html')
+
 def cadastre(request):
-    return render(request, 'home/cadastro.html')
+
+    form = Register()
+    
+    return render(request, 'home/cadastro.html', {'form': form})
 
 
 @login_required
@@ -28,13 +37,14 @@ def index(request):
     Emp = Empresas.objects.all()
     return render(request,'home/empresas_list.html',{'Empresas': Emp })
 
+
 @login_required
 def pesquisar(request):
     pesquisa = request.GET.get('searchCNPJ', None)
     if pesquisa:
         pesquisa = re.sub(r"\D", "", pesquisa)        
         emp = Empresas.objects.filter(doc=pesquisa)   
-        return render(request, 'home/empresas_list.html', {'Empresas': emp})
+        return render(request, '/empresas_detail.html', {'Empresas': emp})
     else:
        return redirect('index')
 
@@ -45,7 +55,3 @@ class listarCnpjView(DetailView):
     template_name='home/empresas_detail.html'
     context_object_name = 'emp_detail'
 
-#Funcao para logout
-def do_logout(request):
-    logout(request)
-    
