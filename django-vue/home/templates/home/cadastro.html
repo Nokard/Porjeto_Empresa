@@ -4,24 +4,13 @@
 
 {% block conteudoRegister %}
 
-<form method="POST">
-        <div class="form-group">
-            <label for="exampleInputEmail1">Username </label>
-            {{ form.username }}
-            {{ form.username.errors}}
-            
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1"> Email </label>
-            {{form.email }}
-            {{form.email.errors}}
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Senha </label>
-            {{form.password }}
-        </div>
-        
-        <div class="custom-control custom-checkbox mb-3">
+<form method="POST" action="">
+    {% csrf_token %}
+       
+        {{ form.as_p }}
+
+        {{ msg }}
+        <div class="custom-control custom-checkbox mb-">
             <input type="checkbox" class="custom-control-input" id="newsletter-signup">
             <label class="custom-control-label" for="newsletter-signup">I want to receive weekly Newsletters</label>
         </div>

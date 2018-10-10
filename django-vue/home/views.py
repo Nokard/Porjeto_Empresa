@@ -6,7 +6,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
-from .forms import Register
+from .forms import Usuario_Cadastro
 
 
 from .models import Empresas
@@ -22,10 +22,27 @@ def do_logout(request):
     return render(request, 'home/index.html')
 
 def cadastre(request):
-
-    form = Register()
     
-    return render(request, 'home/cadastro.html', {'form': form})
+    form = Usuario_Cadastro(request.POST or None)
+
+    if request.method == 'POST':
+        form = Usuario_Cadastro(request.POST)
+        
+        if form.is_valid():
+
+            user = form.save(commit=False)
+
+            #cleaned (normalized) data
+            #username = form.cleaned_data["username"]
+            #password = form.cleaned_data["senha"]
+
+            #user.set_password(password)
+            user.save()    
+            msg = 'cadastrado com sucesso'        
+            return render(request, 'home/cadastro.html', {'form': form, 'msg': msg})
+    else:
+        
+        return render(request, 'home/cadastro.html', {'form': form})
 
 
 @login_required

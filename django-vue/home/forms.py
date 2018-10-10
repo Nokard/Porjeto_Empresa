@@ -1,27 +1,29 @@
-from .models import AuthUser
+from .models import AuthUser, HomeUsuarios
 from django.forms import ModelForm
 from django import forms
-
-
-class Register(forms.ModelForm):
-    class Meta:
-        model = AuthUser
-        fields = ['username','email','password']
-
-        #Colocando o campo Senha como MASCARADO
-        widgets = {
-
-            'username':forms.TextInput(attrs={'placeholder':' Digite seu Usuario'}),
-
-            'email': forms.EmailInput(attrs={'placeholder':' Digite seu email'}),
-
-            'password': forms.PasswordInput(attrs={'placeholder':' Digite sua senha'})
-        }
-    
-     
 
                 
 class Login(ModelForm):
     class Meta:
         model = AuthUser
-        fields = ['username','password',]
+        fields = ['username','password']
+
+
+class Usuario_Cadastro(ModelForm):
+    
+    class Meta:
+        model = HomeUsuarios
+                
+        fields = ['username','nome','email','senha']
+
+        widgets = {
+
+            'username':forms.TextInput(attrs={'placeholder':' Digite seu Usuario'}),
+
+            'nome': forms.TextInput(attrs={'placeholder':' Digite seu nome'}),
+
+            'email': forms.EmailInput(attrs={'placeholder':' Digite seu email'}),
+
+            'senha': forms.PasswordInput(attrs={'placeholder':' Digite sua senha'})
+
+        }

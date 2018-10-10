@@ -119,7 +119,7 @@ class DjangoSession(models.Model):
 
 
 class Empresas(models.Model):
-    id = models.IntegerField(db_column='ID', primary_key=True )  # Field name made lowercase.
+    id = models.IntegerField(primary_key=True, db_column='ID')  # Field name made lowercase.
     cnpj = models.CharField(db_column='CNPJ', max_length=18, blank=True, null=True)  # Field name made lowercase.
     matrizfilial = models.CharField(max_length=6, blank=True, null=True)
     abertura = models.CharField(db_column='ABERTURA', max_length=10, blank=True, null=True)  # Field name made lowercase.
@@ -149,4 +149,20 @@ class Empresas(models.Model):
     class Meta:
         managed = False
         db_table = 'empresas'
+
+class HomeUsuarios(models.Model):
+
+    id_usuario = models.IntegerField(primary_key=True)
+    username = models.CharField(max_length=35)
+    nome = models.CharField(max_length=85)
+    email = models.CharField(unique=True, max_length=85)
+    senha = models.CharField(max_length=35)
+
+    class Meta:
+        managed = False
+        db_table = 'home_usuarios'
+
+    def __str__(self):
+        return self.username
+
 
