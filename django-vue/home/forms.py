@@ -10,6 +10,7 @@ class Login(ModelForm):
 
     widgets = {
         'username':forms.TextInput(attrs={'placeholder':' Digite seu Usuario'}),
+
         'password':forms.PasswordInput(attrs={'placeholder':'Digite sua senha'})
     }
 
@@ -17,18 +18,18 @@ class Login(ModelForm):
 class Usuario_Cadastro(ModelForm):
     
     class Meta:
-        model = Usuarios
+        model = AuthUser
                 
-        fields = ['username','nome','email','senha']
+        fields = ['username','first_name','email','password']
 
         widgets = {
 
             'username':forms.TextInput(attrs={'placeholder':' Digite seu Usuario'}),
 
-            'nome': forms.TextInput(attrs={'placeholder':' Digite seu nome'}),
+            'first_name': forms.TextInput(attrs={'placeholder':' Digite seu nome'}),
 
             'email': forms.EmailInput(attrs={'placeholder':' Digite seu email'}),
 
-            'senha': forms.PasswordInput(attrs={'placeholder':' Digite sua senha'})
+            'password': forms.PasswordInput(attrs={'placeholder':' Digite sua senha'})
 
         }
