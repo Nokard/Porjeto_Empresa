@@ -9,7 +9,13 @@
        
         {{ form.as_p }}
 
-        {{ msg }}
+       
+        {% if messages %}
+        <div class="{{ message.tags}}" role="alert">
+            {{ message }}
+          </div>
+        {% endif%}
+        
         <div class="custom-control custom-checkbox mb-">
             <input type="checkbox" class="custom-control-input" id="newsletter-signup">
             <label class="custom-control-label" for="newsletter-signup">I want to receive weekly Newsletters</label>

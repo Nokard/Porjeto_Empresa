@@ -7,6 +7,10 @@ from django.views.generic.list import ListView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
 from .forms import Usuario_Cadastro
+from django.contrib.auth.models import User
+from django.contrib import messages
+from passlib.hash import pbkdf2_sha256
+from .models import Usuarios
 
 
 from .models import Empresas
@@ -25,21 +29,26 @@ def cadastre(request):
     
     form = Usuario_Cadastro(request.POST or None)
 
-    if request.method == 'POST':
-        form = Usuario_Cadastro(request.POST)
-        
-        if form.is_valid():
+    if form.is_valid():
 
-            user = form.save(commit=False)
+        username = request.POST['username']
+        nome = request.POST['nome']
+        email = request.POST['email']
+        password = request.POST['senha']
 
-            #cleaned (normalized) data
-            #username = form.cleaned_data["username"]
-            #password = form.cleaned_data["senha"]
 
-            #user.set_password(password)
-            user.save()    
-            msg = 'cadastrado com sucesso'        
-            return render(request, 'home/cadastro.html', {'form': form, 'msg': msg})
+        enc_password = pbkdf2_sha256.encrypt(password, rounds=12000, salt_size=32)
+
+        Usuarios.objects.create(
+            username = username,
+            nome = nome,
+            email = email,
+            senha = enc_password
+            
+        ) 
+
+        messages.success(request, 'Cadastro efetuado com sucesso')     
+        return render(request, 'home/cadastro.html', {'form': form })
     else:
         
         return render(request, 'home/cadastro.html', {'form': form})
