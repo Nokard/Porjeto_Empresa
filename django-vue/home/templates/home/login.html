@@ -4,31 +4,22 @@
 
 <form method="POST">
     {% csrf_token %}
+    {{ formularioLogin }}
+   
     
-    <div class="form-group">
-        <label>Username</label>
-        {{ formularioLogin.username}}
-    </div>
-    
-    <div class="form-group">
-            <label>Senha</label>
-            {{ formularioLogin.password}}
-    </div>
     <button type="submit" class="btn btn-primary btn-gradient">
         
-        Entrar
+        Sign In
     </button>
-    {% if formularioLogin.erros %}
-        {% for error in formularioLogin %}
-            <div class="alert alert-danger">
-                <strong>{{ error|escape }}</strong>
-            </div>
-        {% endfor%}
-    {% endif %}
-    <hr
+    <hr>
     <p class="text-center">
         Não possui conta ? <a href="/REGISTER">CADASTRE-SE</a>
     </p>
+    <hr>
+    <p class="text-center">
+        Não possui conta ? <a href="/REGISTER">CADASTRE-SE</a>
+    </p>
+
 </form>
 
 {% endblock%}

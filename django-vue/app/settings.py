@@ -71,8 +71,8 @@ DATABASES = {
         'NAME': 'djvue',
         'USER': 'django',
         'PASSWORD': 'Django123',
-        'HOST': '192.168.1.10',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
+        'HOST': '186.231.100.166',   # Or an IP Address that your DB is hosted on
+        'PORT': '3307',
     }
 }
 
@@ -94,11 +94,22 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+USE_I18N = True
+
+LANGUAGES = (
+    ('en', u'English'),
+    ('pt-br', u'Português'),
+)
 
 TIME_ZONE = 'UTC'
 

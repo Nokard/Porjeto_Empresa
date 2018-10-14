@@ -63,9 +63,15 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">
+						<a class="nav-link" href="/INDEX">
 							<i class="batch-icon batch-icon-arrow-left"></i>
 							Consulta CNPJ
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/EMAIL">
+							<i class="batch-icon batch-icon-arrow-left"></i>
+							Validar Emails
 						</a>
 					</li>
 				</ul>
@@ -253,7 +259,7 @@
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" id="navbar-dropdown-navbar-profile" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
 									<div class="profile-name">
-										{{ user.first_name }} {{user.last_name}}
+									 Bem vindo <b>{{ user.first_name }} {{user.last_name}}</b>
 									</div>
 									<div class="profile-picture bg-gradient bg-primary has-message float-right">
 										<img src="{% static 'img/profile-pic.jpg' %}" width="44" height="44">

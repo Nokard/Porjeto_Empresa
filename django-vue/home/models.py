@@ -6,6 +6,7 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+from passlib.hash import pbkdf2_sha256
 
 
 class AuthGroup(models.Model):
@@ -38,20 +39,26 @@ class AuthPermission(models.Model):
 
 
 class AuthUser(models.Model):
+    id = models.IntegerField(primary_key=True)
     password = models.CharField(max_length=128)
     last_login = models.DateTimeField(blank=True, null=True)
-    is_superuser = models.IntegerField()
+    is_superuser = models.IntegerField(null=True)
     username = models.CharField(unique=True, max_length=150)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=150)
     email = models.CharField(max_length=254)
     is_staff = models.IntegerField()
-    is_active = models.IntegerField()
+    is_active = models.IntegerField(default='1')
     date_joined = models.DateTimeField()
 
     class Meta:
         managed = False
         db_table = 'auth_user'
+
+
+class creditos(models.Model):
+    credito_id = models.IntegerField(primary_key=True)
+    valor_creditos = models.CharField(max_length=35)
 
 
 class AuthUserGroups(models.Model):
@@ -119,7 +126,7 @@ class DjangoSession(models.Model):
 
 
 class Empresas(models.Model):
-    id = models.IntegerField(db_column='ID', primary_key=True )  # Field name made lowercase.
+    id = models.IntegerField(primary_key=True, db_column='ID')  # Field name made lowercase.
     cnpj = models.CharField(db_column='CNPJ', max_length=18, blank=True, null=True)  # Field name made lowercase.
     matrizfilial = models.CharField(max_length=6, blank=True, null=True)
     abertura = models.CharField(db_column='ABERTURA', max_length=10, blank=True, null=True)  # Field name made lowercase.
@@ -150,3 +157,18 @@ class Empresas(models.Model):
         managed = False
         db_table = 'empresas'
 
+
+class Usuarios(models.Model):
+
+    username = models.CharField(max_length=35, blank=True, null=True)
+    nome = models.CharField(unique=True,max_length=85, blank=True, null=True)
+    email = models.CharField(unique=True, max_length=85, blank=True, null=True)
+    senha = models.CharField(max_length=255, blank=True, null=True)
+
+
+    class Meta:
+        managed = False
+        db_table = 'usuarios'
+
+    def verify_password(self, raw_password):
+        return pbkdf2_sha256.verify(raw_password, self.senha)
