@@ -31,6 +31,8 @@
 	<!-- CSS - OPTIONAL - START -->
 	<!-- Font Awesome -->
 	<link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.min.css' %}">
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" href="{% static 'plugins/datatables/css/responsive.bootstrap4.min.css' %}">
 
 	<!-- CSS - DEMO - START -->
 	<!-- CSS - DEMO - END -->
@@ -39,6 +41,50 @@
 
 	<!-- QuillPro Styles -->
 	<link rel="stylesheet" href="{% static 'css/quillpro/quillpro.css' %}">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	
+	<script type="text/javascript">
+
+        $(document).ready(function () {
+            $('.table-datatable').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+                    
+                ],
+                language: {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar na tabela",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                }
+            });
+        });
+	</script>
+	
+
 </head>
 
 <body>
@@ -57,7 +103,7 @@
 						<h6 class="nav-header">Serviços</h6>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="#">
+						<a class="nav-link active" href="/">
 							<i class="batch-icon batch-icon-star"></i>
 							Painel
 						</a>
@@ -94,12 +140,12 @@
 							</a>
 							<ul class="dropdown-menu dropdown-menu-fullscreen" aria-labelledby="navbar-notification-search-mobile">
 								<li>
-									<form class="form-inline my-2 my-lg-0 no-waves-effect" action="/INDEX" method="GET">
+									<form class="form-inline my-2 my-lg-0 no-waves-effect">
 										<div class="input-group">
-											<input type="text" class="form-control" name="searchCNPJ" placeholder="Pesquisar CNPJ..." aria-label="Pesquisar CNPJ..." aria-describedby="basic-addon2">
+											<input type="text" class="form-control" placeholder="Pesquisar CNPJ..." aria-label="Pesquisar CNPJ..." aria-describedby="basic-addon2">
 											<div class="input-group-append">
-												<button class="btn btn-primary btn-gradient waves-effect waves-light" type="submit">
-													Consultar
+												<button class="btn btn-primary btn-gradient waves-effect waves-light" type="button">
+													<!-- i class="batch-icon batch-icon-search"></i --> Pesquisar
 												</button>
 											</div>
 										</div>
@@ -115,7 +161,7 @@
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" id="navbar-dropdown-menu-link" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
 									<i class="batch-icon batch-icon-book-alt-"></i>
-									Portugues
+									English
 								</a>
 								<ul class="dropdown-menu" aria-labelledby="navbar-dropdown-menu-link">
 									<li><a class="dropdown-item" href="#">Français</a></li>
@@ -131,9 +177,9 @@
 								</a>
 								<ul class="dropdown-menu dropdown-menu-fullscreen" aria-labelledby="navbar-notification-search">
 									<li>
-										<form class="form-inline my-2 my-lg-0 no-waves-effect" method="get">
+										<form class="form-inline my-2 my-lg-0 no-waves-effect" action="/" method="get">
 											<div class="input-group">
-												<input type="text" class="form-control" name="searchCNPJ" placeholder="Digite o cnpj..." aria-label="Search for..." aria-describedby="basic-addon2">
+												<input type="text" class="form-control" name="searchCNPJ" placeholder="Pesquisar CNPJ..." aria-label="Pesquisar CNPJ..." aria-describedby="basic-addon2">
 												<div class="input-group-append">
 													<button class="btn btn-primary btn-gradient waves-effect waves-light" type="submit">Consultar</button>
 												</div>
@@ -259,29 +305,29 @@
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" id="navbar-dropdown-navbar-profile" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
 									<div class="profile-name">
-									 Bem vindo <b>{{ user.first_name }} {{user.last_name}}</b>
+										Johanna Quinn
 									</div>
 									<div class="profile-picture bg-gradient bg-primary has-message float-right">
 										<img src="{% static 'img/profile-pic.jpg' %}" width="44" height="44">
 									</div>
 								</a>
 								<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-navbar-profile">
-									<li><a class="dropdown-item" href="profiles-member-profile.html">PERFIL</a></li>
-									<li><a class="dropdown-item" href="mail-inbox.html">MENSAGENS <span class="badge badge-danger badge-pill float-right">3</span></a>
+									<li><a class="dropdown-item" href="profiles-member-profile.html">Profile</a></li>
+									<li>
+										<a class="dropdown-item" href="mail-inbox.html">
+											Messages 
+											<span class="badge badge-danger badge-pill float-right">3</span>
+										</a>
 									</li>
-									<li><a class="dropdown-item" href="profiles-member-profile.html">CONFIGURAÇÕES</a></li>
-									<li><a class="dropdown-item" href="/LOGOUT">SAIR</a></li>
+									<li><a class="dropdown-item" href="profiles-member-profile.html">Settings</a></li>
+									<li><a class="dropdown-item" href="sisu-lock-screen.html">Logout</a></li>
 								</ul>
 							</li>
 						</ul>
 					</div>
 				</nav>
 				<main class="main-content p-5" role="main">
-					<div class="row">
-						<div class="col-md-12">
-							<h1>Empresas</h1>
-						</div>
-					</div>
+					
 					<div class="row mb-4">
 						<div class="col-md-12">
                             {% block content %}
@@ -324,6 +370,11 @@
 	<!-- SCRIPTS - REQUIRED END -->
 
 	<!-- SCRIPTS - OPTIONAL START -->
+	<!-- Datatables -->
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="{% static 'plugins/datatables/js/dataTables.bootstrap4.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'plugins/datatables/js/dataTables.responsive.min.js' %}"></script>
+	<!-- script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.3/js/dataTables.buttons.min.js"></script -->
 
 	<!-- SCRIPTS - DEMO - START -->
 	<!-- Image Placeholder -->
@@ -334,5 +385,7 @@
 
 	<!-- QuillPro Scripts -->
 	<script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>
+
+	
 </body>
 </html>

@@ -6,58 +6,33 @@
     {% csrf_token %}
     
     <div class="form-group">
-        <label>Username</label>
-        {{ formularioLogin.username}}
+        <label>Usuario</label>
+        {{ form.username }}
+        {{ form.username.errors}}
     </div>
-    
+
     <div class="form-group">
-            <label>Senha</label>
-            {{ formularioLogin.password}}
+        <label>Senha</label>
+        {{ form.password }}
+        {{ form.password.errors}}
     </div>
+    {% if menssages %}
+        {% for message in messages %}
+            {% if message.tags %}
+                <p>{{ message }}</p>
+            {% endif%}
+        {% endfor%}
+    {% endif %}
+
+
     <button type="submit" class="btn btn-primary btn-gradient">
         
         Entrar
     </button>
-    {% if formularioLogin.erros %}
-        {% for error in formularioLogin %}
-            <div class="alert alert-danger">
-                <strong>{{ error|escape }}</strong>
-            </div>
-        {% endfor%}
-    {% endif %}
-    <hr
+      <hr
     <p class="text-center">
-        Não possui conta ? <a href="/REGISTER">CADASTRE-SE</a>
+        Não possui conta ainda asd ? <a href="/REGISTER">CADASTRE-SE</a>
     </p>
 </form>
 
 {% endblock%}
-
-<!--
-<div class="container">
-    <div class="login_form">
-        <h2>Login</h2>
-       
-        <form method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-            <label for="email">Username:</label>
-            <input type="text" class="form-control" id="email" placeholder="Digite seu E-mail" name="username">
-            </div>
-            <div class="form-group">
-            <label for="pwd">Senha:</label>
-            <input type="password" class="form-control" id="senha" placeholder="Digite sua senha" name="password" required>
-            </div>
-            <div class="checkbox">
-            <label><input type="checkbox" name="remember"> Remember me</label>
-            </div>
-            <button type="submit" class="btn btn-default">Logar</button>
-        </form>
-        </div>
-    
-    </div>
-    
-</div>
-</body>
-</html>
--->

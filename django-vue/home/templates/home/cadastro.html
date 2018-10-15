@@ -4,7 +4,7 @@
 
 {% block conteudoRegister %}
 
-<form method="POST" action="">
+<form method="POST">
     {% csrf_token %}
        
     <div class="form-group">
@@ -23,14 +23,28 @@
     <div class="form-group">
         <label>Email</label>
         {{ form.email}}
+        {{form.email.errors}}
     </div>
     <div class="form-group">
         <label>Senha</label>
         {{ form.password}}
     </div> 
           
-        
-        
+    {% if messages %}
+    <div class="alert alert-success">
+            {% for msg in messages %}
+
+            <strong>Sucesso!</strong> {{msg.message }}</a>.
+            
+            {% endfor %}
+            
+          </div>
+           
+    {% endif %}
+
+
+
+
         <div class="custom-control custom-checkbox mb-">
             <input type="checkbox" class="custom-control-input" id="newsletter-signup">
             <label class="custom-control-label" for="newsletter-signup">I want to receive weekly Newsletters</label>

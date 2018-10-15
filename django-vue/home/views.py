@@ -13,6 +13,7 @@ from django.contrib import messages
 from passlib.hash import pbkdf2_sha256
 from django.contrib.auth.hashers import PBKDF2PasswordHasher
 from .models import Usuarios, AuthUser
+from django.contrib import messages
 
 
 from .models import Empresas
@@ -24,24 +25,27 @@ def first(request):
 
 def do_login(request):
 
-    form = Login(request.POST or None)
+    formularioLogin = Login(request.POST or None)
+    
+    if request.method == 'POST':
 
-    if request.method == 'POST' and form.is_valid():
-                
-        
-        username = form.cleaned_data['username']
-        password = form.cleaned_data['password']
-        
-        user = authenticate(username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            return redirect('home/empresas_list.html')
+        if formularioLogin.is_valid():
             
+                username = formularioLogin.cleaned_data['username']
+                password = formularioLogin.cleaned_data['password']
+                
+                user = authenticate(username=username, password=password)
+
+                if user is not None:
+                    login(request, user)
+                    return redirect('home/empresas_list.html')
+                    
+                else:
+                    return render(request, 'home/index.html')
         else:
-            return render(request, 'home/index.html')
+            return render(request, 'home/login.html', {'formLogin': formularioLogin})
     else:
-        return render(request, 'home/login.html', {'formularioLogin': form})
+        return render(request, 'home/login.html', {'formLogin': formularioLogin})
 
 
 
@@ -63,7 +67,7 @@ def cadastre(request):
         enc_password = hasher.encode(password=password,
                                   salt='salt',
                                   iterations=50000)
-        #enc_password = pbkdf2_sha256.encrypt(password, rounds=15000, salt_size=32)
+        
 
                 
         AuthUser.objects.create(
@@ -74,8 +78,8 @@ def cadastre(request):
             password = enc_password 
             ) 
 
-        messages.success(request, 'Cadastro efetuado com sucesso')     
-        return render(request, 'home/cadastro.html', {'form': form })
+        messages.add_message(request, messages.SUCCESS, 'Usuario cadastrado com sucesso')
+        return render(request, 'home/cadastro.html', {'form': form  })
         
     else:
         
