@@ -133,6 +133,8 @@ def arquivos(request):
 
     csv_file = request.FILES['file']
 
+    
+
     if not csv_file.name.endswith('.csv'):
         messages.add_message(request, messages.error, 'Arquivo não é csv ')
 
@@ -140,9 +142,8 @@ def arquivos(request):
     io_string = io.StringIO(data_set)
     next(io_string)
 
-    
-    for column in csv.reader(io_string, delimiter=',', quotechar="|"):
-        email = column
+    email = csv.reader(io_string, delimiter=',', quotechar="|")
+        
     return render(request, template, {'email': email})
         
         

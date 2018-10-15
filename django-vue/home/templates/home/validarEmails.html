@@ -11,14 +11,27 @@
             <input type="file" name="file" class="form-control-file" id="exampleFormControlFile1" >
             <span class="badge badge-danger">Somente arquivos CSV </span>
         </div>
-        
         <button type="submit" class="btn btn-primary btn-gradient"> Carregar Dados </button>
     </form>
 
-    {% for em in colunm %}
-        
-        <p> {{ em }}</p>
+   
 
-    {% endfor %}
+    <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th>EMAILS CARREGADOS</th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+                {% for em in email %}
+                <tr>
+                        
+                    <td>{{ em }}</td>
+                </tr>
+                {% endfor %}
+            
+            </tbody>
+        </table>
 
 {% endblock%}
