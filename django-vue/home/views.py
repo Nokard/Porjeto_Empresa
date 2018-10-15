@@ -1,4 +1,4 @@
-import re
+import re, csv, io
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.core.serializers import serialize
 from django.http import HttpResponseRedirect
@@ -14,6 +14,8 @@ from passlib.hash import pbkdf2_sha256
 from django.contrib.auth.hashers import PBKDF2PasswordHasher
 from .models import Usuarios, AuthUser
 from django.contrib import messages
+from django.urls import reverse
+
 
 
 from .models import Empresas
@@ -78,7 +80,7 @@ def cadastre(request):
             password = enc_password 
             ) 
 
-        messages.add_message(request, messages.SUCCESS, 'Usuario cadastrado com sucesso')
+        messages.add_message(request, messages.SUCCESS, 'Usuario cadastrado com sucesso ')
         return render(request, 'home/cadastro.html', {'form': form  })
         
     else:
@@ -121,3 +123,26 @@ def do_logout(request):
 
 def validarEmails(request):
     return render(request, 'home/validarEmails.html')    
+
+@login_required
+def arquivos(request):
+    template = "home/validarEmails.html"
+
+    if request.method == 'GET':
+        return render(request,template)
+
+    csv_file = request.FILES['file']
+
+    if not csv_file.name.endswith('.csv'):
+        messages.add_message(request, messages.error, 'Arquivo não é csv ')
+
+    data_set = csv_file.read().decode('UTF-8')
+    io_string = io.StringIO(data_set)
+    next(io_string)
+
+    
+    for column in csv.reader(io_string, delimiter=',', quotechar="|"):
+        email = column
+    return render(request, template, {'email': email})
+        
+        

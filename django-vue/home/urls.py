@@ -20,6 +20,7 @@ urlpatterns = [
 
     path('EMAIL', views.validarEmails, name='ValidarEmails'),
 
+    path('VALIDAR_EMAIL', views.arquivos, name="upload"),
     #path('LOGIN', views.do_login, name='login'),
 
     #path('LOGIN/', LoginView.as_view(), name='login'),
