@@ -6,7 +6,6 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-from passlib.hash import pbkdf2_sha256
 
 
 class AuthGroup(models.Model):
@@ -39,30 +38,25 @@ class AuthPermission(models.Model):
 
 
 class AuthUser(models.Model):
-    id = models.IntegerField(primary_key=True)
-    password = models.CharField(max_length=128)
+    password = models.CharField(max_length=128, blank=True, null=True)
     last_login = models.DateTimeField(blank=True, null=True)
-    is_superuser = models.IntegerField(null=True)
-    username = models.CharField(unique=True, max_length=150)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=150)
-    email = models.CharField(max_length=254)
-    is_staff = models.IntegerField()
-    is_active = models.IntegerField(default='1')
-    date_joined = models.DateTimeField()
+    is_superuser = models.IntegerField(blank=True, null=True)
+    username = models.CharField(unique=True, max_length=150, blank=True, null=True)
+    first_name = models.CharField(max_length=30, blank=True, null=True)
+    last_name = models.CharField(max_length=150, blank=True, null=True)
+    email = models.CharField(max_length=254, blank=True, null=True)
+    is_staff = models.IntegerField(blank=True, null=True)
+    is_active = models.IntegerField(blank=True, null=True)
+    date_joined = models.DateTimeField(blank=True, null=True)
+    credito = models.CharField(max_length=10, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'auth_user'
 
 
-class creditos(models.Model):
-    credito_id = models.IntegerField(primary_key=True)
-    valor_creditos = models.CharField(max_length=35)
-
-
 class AuthUserGroups(models.Model):
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    user = models.ForeignKey('HomeCreditos', models.DO_NOTHING)
     group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
 
     class Meta:
@@ -72,13 +66,22 @@ class AuthUserGroups(models.Model):
 
 
 class AuthUserUserPermissions(models.Model):
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    user = models.ForeignKey('HomeCreditos', models.DO_NOTHING)
     permission = models.ForeignKey(AuthPermission, models.DO_NOTHING)
 
     class Meta:
         managed = False
         db_table = 'auth_user_user_permissions'
         unique_together = (('user', 'permission'),)
+
+
+class Creditos(models.Model):
+    credito_id = models.IntegerField(primary_key=True)
+    valor_creditos = models.CharField(max_length=35, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'creditos'
 
 
 class DjangoAdminLog(models.Model):
@@ -88,7 +91,7 @@ class DjangoAdminLog(models.Model):
     action_flag = models.PositiveSmallIntegerField()
     change_message = models.TextField()
     content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    user = models.ForeignKey('HomeCreditos', models.DO_NOTHING)
 
     class Meta:
         managed = False
@@ -158,17 +161,38 @@ class Empresas(models.Model):
         db_table = 'empresas'
 
 
-class Usuarios(models.Model):
+class HomeCreditos(models.Model):
+    password = models.CharField(max_length=128)
+    last_login = models.DateTimeField(blank=True, null=True)
+    is_superuser = models.IntegerField(blank=True, null=True)
+    username = models.CharField(unique=True, max_length=150)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=150)
+    email = models.CharField(max_length=254)
+    is_staff = models.IntegerField(blank=True, null=True)
+    is_active = models.IntegerField(blank=True, null=True)
+    date_joined = models.DateTimeField(blank=True, null=True)
+    creditos = models.CharField(max_length=45, blank=True, null=True)
 
+    class Meta:
+        managed = False
+        db_table = 'home_creditos'
+
+
+class HomeDocumento(models.Model):
+    num_doc = models.CharField(max_length=50)
+
+    class Meta:
+        managed = False
+        db_table = 'home_documento'
+
+
+class Usuarios(models.Model):
     username = models.CharField(max_length=35, blank=True, null=True)
-    nome = models.CharField(unique=True,max_length=85, blank=True, null=True)
+    nome = models.CharField(max_length=85, blank=True, null=True)
     email = models.CharField(unique=True, max_length=85, blank=True, null=True)
     senha = models.CharField(max_length=255, blank=True, null=True)
-
 
     class Meta:
         managed = False
         db_table = 'usuarios'
-
-    def verify_password(self, raw_password):
-        return pbkdf2_sha256.verify(raw_password, self.senha)

@@ -124,6 +124,8 @@ def do_logout(request):
 def validarEmails(request):
     return render(request, 'home/validarEmails.html')    
 
+
+
 @login_required
 def arquivos(request):
     template = "home/validarEmails.html"
@@ -131,19 +133,31 @@ def arquivos(request):
     if request.method == 'GET':
         return render(request,template)
 
-    csv_file = request.FILES['file']
+    try:
+        csv_file = request.FILES['file']
+        
+        if not csv_file.name.endswith('.csv'):
+            messages.add_message(request, messages.error, 'Arquivo não é csv ')
 
+        data_set = csv_file.read().decode('UTF-8')
+        io_string = io.StringIO(data_set)
+        next(io_string)
+
+
+        
+
+        email = csv.reader(io_string, delimiter=',', quotechar="|")
+        
+        return render(request, template, {'email': email})
     
+    except:
+        messages.add_message(request, messages.INFO, 'ARQUIVO NÃO CARREGADO')
+        return render(request, template)
 
-    if not csv_file.name.endswith('.csv'):
-        messages.add_message(request, messages.error, 'Arquivo não é csv ')
 
-    data_set = csv_file.read().decode('UTF-8')
-    io_string = io.StringIO(data_set)
-    next(io_string)
+@login_required
+def painel(request):
+    template = "home/painel.html"
 
-    email = csv.reader(io_string, delimiter=',', quotechar="|")
-        
-    return render(request, template, {'email': email})
-        
-        
+    return render(request, template)
+

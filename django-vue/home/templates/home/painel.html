@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="col-md-6 col-lg-6 col-xl-3 mb-5">
+    <div class="card card-tile card-xs bg-primary bg-gradient text-center">
+        <div class="card-body p-4">
+            <!-- Accepts .invisible: Makes the items. Use this only when you want to have an animation called on it later -->
+            <div class="tile-left">
+                <i class="batch-icon batch-icon-user-alt batch-icon-xxl"></i>
+            </div>
+            <div class="tile-right">
+                <div class="tile-number">{{ user.email }}</div>
+                <div class="tile-description">Customers Online</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

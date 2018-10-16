@@ -14,13 +14,16 @@ urlpatterns = [
     
     path('', views.pesquisar, name="pesquisar"), 
 
-    path('<int:pk>/', views.listarCnpjView.as_view(), name='emp_detail'),
+    path('INDEX/<int:pk>/', views.listarCnpjView.as_view(), name='emp_detail'),
         
     path('LOGIN', LoginView.as_view(), name='login'),
 
     path('EMAIL', views.validarEmails, name='ValidarEmails'),
 
     path('VALIDAR_EMAIL', views.arquivos, name="upload"),
+
+    
+    path('PAINEL', views.painel, name="upload"),
     #path('LOGIN', views.do_login, name='login'),
 
     #path('LOGIN/', LoginView.as_view(), name='login'),

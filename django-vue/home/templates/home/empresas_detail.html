@@ -26,25 +26,87 @@
     </table>
 
     <div class="form-row">
-        <div class="col-md-4 mb-3">
+        <div class="col-md-4 ">
             <label for="validationCustom01" class="active">Nome Fantasia</label>
             <input type="text" class="form-control" id="validationCustom01" placeholder="First name" value={{ object.nmf }}>
             
         </div>
-        <div class="col-md-4 mb-2">
+        <div class="col-md-4 ">
             <label for="validationCustom02" class="active">Porte</label>
             <input type="text" class="form-control" id="validationCustom02" placeholder="Last name" value={{ object.porte }} >
             
         </div>
-        <div class="col-md-4 mb-2">
+        <div class="col-md-4 ">
             
             <label for="validationCustom02" class="active">UF</label>
-                <input type="text" class="form-control" id="validationCustomUsername" placeholder={{ object.uf }} aria-describedby="inputGroupPrepend">
+                <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" value= {{ object.uf }}>
                 
+          
+        </div>
+        <div class="col-md-4 ">
+            
+            <label for="validationCustom02" class="active">ENDERECO</label>
+            <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" value= {{ object.lg }}>
+                
+            
+        </div>
+        <div class="col-md-4 ">
+            
+            <label for="validationCustom02" class="active">BAIRRO</label>
+                <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" value="{{ object.br}}">
+                
+            
+        </div>
+        <div class="col-md-4 mb-2">
+            
+            <label for="validationCustom02" class="active">MUNICIPIO</label>
+                <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" value="{{ object.mu}}">
+                
+          
+        </div>
+        <div class="col-md-4 mb-2">
+            
+            <label for="validationCustom02" class="active">NUMERO</label>
+                <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" value="{{ object.nr}}">
+                
+          
+        </div>
+        <div class="col-md-4 mb-2">
+            
+            <label for="validationCustom02" class="active">COMPLEMENTO</label>
+            {% if object.cp  == '' %}
+            <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" value="NÃO TEM">
+            {% else %}
+            <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" value="{{ object.cp}}">
+            {% endif %}
+            
+                
+          
+        </div>
+        <div class="col-md-4 mb-2">
+           
+            <label for="validationCustom02" class="active">EMAIL</label>
+            {% if object.enderecoeletronico == '' %}
+                <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" value="NÃO TEM">
+            {% else %}
+                <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" value="{{ object.enderecoeletronico}}">
+            {% endif %}    
+          
+        </div>
+        
+
+        <div class="col-md-4 mb-2">
+            
+            <label for="validationCustom02" class="active">TELEFONE</label>
+            {% if object.telefone == '' %}
+                <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" value="NÃO TEM">
+            {% else %}    
+                <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" value="{{ object.telefone }}">
+            {% endif%}
+            
             </div>
         </div>
     </div>
-
 
 
 {% endblock %}
