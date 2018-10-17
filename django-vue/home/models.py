@@ -48,15 +48,20 @@ class AuthUser(models.Model):
     is_staff = models.IntegerField(blank=True, null=True)
     is_active = models.IntegerField(blank=True, null=True)
     date_joined = models.DateTimeField(blank=True, null=True)
-    credito = models.CharField(max_length=10, blank=True, null=True)
-
+    
     class Meta:
         managed = False
         db_table = 'auth_user'
 
+class valor_creditos(models.Model):
+    usuario = models.ForeignKey('AuthUser', null=True, on_delete=models.CASCADE)
+    creditos_inseridos = models.CharField(max_length=50)
+    valorCreditos = models.CharField(max_length=35)
+    
+    
 
 class AuthUserGroups(models.Model):
-    user = models.ForeignKey('HomeCreditos', models.DO_NOTHING)
+    user = models.ForeignKey('AuthUser', models.DO_NOTHING)
     group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
 
     class Meta:
@@ -66,7 +71,7 @@ class AuthUserGroups(models.Model):
 
 
 class AuthUserUserPermissions(models.Model):
-    user = models.ForeignKey('HomeCreditos', models.DO_NOTHING)
+    user = models.ForeignKey('AuthUser', models.DO_NOTHING)
     permission = models.ForeignKey(AuthPermission, models.DO_NOTHING)
 
     class Meta:
@@ -75,13 +80,7 @@ class AuthUserUserPermissions(models.Model):
         unique_together = (('user', 'permission'),)
 
 
-class Creditos(models.Model):
-    credito_id = models.IntegerField(primary_key=True)
-    valor_creditos = models.CharField(max_length=35, blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'creditos'
 
 
 class DjangoAdminLog(models.Model):
@@ -91,7 +90,7 @@ class DjangoAdminLog(models.Model):
     action_flag = models.PositiveSmallIntegerField()
     change_message = models.TextField()
     content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
-    user = models.ForeignKey('HomeCreditos', models.DO_NOTHING)
+    user = models.ForeignKey('AuthUser', models.DO_NOTHING)
 
     class Meta:
         managed = False
@@ -161,23 +160,6 @@ class Empresas(models.Model):
         db_table = 'empresas'
 
 
-class HomeCreditos(models.Model):
-    password = models.CharField(max_length=128)
-    last_login = models.DateTimeField(blank=True, null=True)
-    is_superuser = models.IntegerField(blank=True, null=True)
-    username = models.CharField(unique=True, max_length=150)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=150)
-    email = models.CharField(max_length=254)
-    is_staff = models.IntegerField(blank=True, null=True)
-    is_active = models.IntegerField(blank=True, null=True)
-    date_joined = models.DateTimeField(blank=True, null=True)
-    creditos = models.CharField(max_length=45, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'home_creditos'
-
 
 class HomeDocumento(models.Model):
     num_doc = models.CharField(max_length=50)
@@ -188,6 +170,7 @@ class HomeDocumento(models.Model):
 
 
 class Usuarios(models.Model):
+    
     username = models.CharField(max_length=35, blank=True, null=True)
     nome = models.CharField(max_length=85, blank=True, null=True)
     email = models.CharField(unique=True, max_length=85, blank=True, null=True)

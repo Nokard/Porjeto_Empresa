@@ -257,7 +257,8 @@
 											<div class="media-body">
 												<h6 class="mt-0 mb-1 notification-heading">CREDITOS</h6>
 												<div class="notification-text">
-													{{ user.credito }}
+													
+													{{ user.ValorCreditos}}
 												</div>
 												
 											</div>
@@ -270,7 +271,7 @@
 											<div class="media-body">
 												<h6 class="mt-0 mb-1 notification-heading">ULTIMO LOGIN</h6>
 												<div class="notification-text">
-													{{ user.last_login }}
+													{{ usuario.nome }}
 												</div>
 												
 											</div>
@@ -283,7 +284,7 @@
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" id="navbar-dropdown-navbar-profile" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
 									<div class="profile-name">
-										Bem Vindo <b> {{ user.first_name}} {{ user.last_name}} {{ user.doc }}</b>
+										Bem Vindo <b> {{ user.first_name}} {{ user.last_name}} </b>
 									</div>
 									
 									

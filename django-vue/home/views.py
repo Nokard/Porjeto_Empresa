@@ -34,13 +34,13 @@ def do_login(request):
         if formularioLogin.is_valid():
             
                 username = formularioLogin.cleaned_data['username']
-                password = formularioLogin.cleaned_data['password']
+                password = formularioLogin.cleaned_data['senha']
                 
                 user = authenticate(username=username, password=password)
 
                 if user is not None:
                     login(request, user)
-                    return redirect('home/empresas_list.html')
+                    return redirect('/INDEX')
                     
                 else:
                     return render(request, 'home/index.html')
@@ -53,15 +53,14 @@ def do_login(request):
 
 def cadastre(request):
     
-    form = Usuario_Cadastro(request.POST or None)
+    form = Usuarios(request.POST or None)
 
-    if form.is_valid():
+    if request.method == 'POST':
 
         username = request.POST['username']
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
+        first_name = request.POST['nome']
         email = request.POST['email']
-        password = request.POST['password']
+        password = request.POST['senha']
         
 
         hasher = PBKDF2PasswordHasher()
@@ -72,12 +71,11 @@ def cadastre(request):
         
 
                 
-        AuthUser.objects.create(
+        Usuarios.objects.create(
             username = username,
-            first_name = first_name,
-            last_name = last_name,
+            nome = first_name,            
             email = email,
-            password = enc_password 
+            senha = enc_password 
             ) 
 
         messages.add_message(request, messages.SUCCESS, 'Usuario cadastrado com sucesso ')
@@ -95,7 +93,12 @@ class EmpresasList(ListView):
 @login_required
 def index(request):
     Emp = Empresas.objects.all()
-    return render(request,'home/empresas_list.html',{'Empresas': Emp })
+    
+    context = {
+        'Empresas': Emp,
+    }
+
+    return render(request,'home/empresas_list.html', context)
 
 
 @login_required

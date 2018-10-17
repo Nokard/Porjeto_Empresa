@@ -6,15 +6,15 @@ from django import forms
 class Login(ModelForm):
 
     class Meta:
-        model = AuthUser
+        model = Usuarios
 
-        fields = ['username','password']
+        fields = ['username','senha']
 
         widgets = {
         
         'username': forms.TextInput(attrs={'placeholder':' Digite seu Usuario'}),
 
-        'password': forms.PasswordInput(attrs={'placeholder':' Digite sua senha'})
+        'senha': forms.PasswordInput(attrs={'placeholder':' Digite sua senha'})
 
         }
 
@@ -22,7 +22,7 @@ class Login(ModelForm):
         user = self.cleaned_data['username']
        
         try:
-            match = AuthUser.objects.get(username = user)
+            match = Usuarios.objects.get(username = user)
 
         except:
             return self.cleaned_data['username']
@@ -32,6 +32,43 @@ class Login(ModelForm):
 
 
 
+class Usuario_Cadastro(ModelForm):
+    
+    class Meta:
+        model = Usuarios
+                
+        fields = ['username','nome','email','senha']
+
+        widgets = {
+
+            'username':forms.TextInput(attrs={'placeholder':' Digite seu Usuario'}),
+
+            'nome': forms.TextInput(attrs={'placeholder':' Digite seu nome'}),
+
+            'email': forms.EmailInput(attrs={'placeholder':' Digite seu email'}),
+
+            'senha': forms.PasswordInput(attrs={'placeholder':' Digite sua senha'})
+
+        }
+
+    def clean_username(self):
+            user = self.cleaned_data['username']
+            try:
+                match = Usuarios.objects.get(username = user)
+            except:
+                return self.cleaned_data['username']
+            raise forms.ValidationError('Usuario com esse Nick já existe')
+
+    def clean_email(self):
+        email_user = self.cleaned_data['email']
+
+        try:
+            match = Usuarios.objects.get(email = email_user)
+        except:
+            return self.cleaned_data['email']
+        raise forms.ValidationError('Usuário com esse email já existe ')
+
+'''
 class Usuario_Cadastro(ModelForm):
     
     class Meta:
@@ -69,3 +106,6 @@ class Usuario_Cadastro(ModelForm):
         except:
             return self.cleaned_data['email']
         raise forms.ValidationError('Usuário com esse email já existe ')
+
+        
+'''

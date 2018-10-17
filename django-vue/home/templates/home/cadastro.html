@@ -9,25 +9,23 @@
        
     <div class="form-group">
         <label>Username</label>
-        {{ form.username}}
+        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username" name="username">
         {{ form.username.errors}}
     </div>
     <div class="form-group">
         <label>Nome</label>
-        {{ form.first_name}}
+        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nome" name="nome">
     </div>
-    <div class="form-group">
-        <label>Ultimo nome </label>
-        {{ form.last_name}}
-    </div>
+   
     <div class="form-group">
         <label>Email</label>
-        {{ form.email}}
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email">
         {{form.email.errors}}
     </div>
     <div class="form-group">
         <label>Senha</label>
-        {{ form.password}}
+        <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Senha" name="senha">
+       
     </div> 
           
     {% if messages %}
