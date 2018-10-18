@@ -24,63 +24,66 @@ from .models import Empresas
 def first(request):
     return render(request, 'home/index.html')
 
-
+'''
+#Não estou usando esse funcao de login
 def do_login(request):
 
     formularioLogin = Login(request.POST or None)
     
+
     if request.method == 'POST':
 
-        if formularioLogin.is_valid():
-            
-                username = formularioLogin.cleaned_data['username']
-                password = formularioLogin.cleaned_data['senha']
-                
-                user = authenticate(username=username, password=password)
+            #username = formularioLogin.cleaned_data['username']
+            #password = formularioLogin.cleaned_data['senha']
 
-                if user is not None:
-                    login(request, user)
-                    return redirect('/INDEX')
+            username = request.POST['username']
+            password = request.POST['senha']
+                
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                return redirect('index')
                     
-                else:
-                    return render(request, 'home/index.html')
-        else:
-            return render(request, 'home/login.html', {'formLogin': formularioLogin})
+            else:
+                return render(request, 'home/cadastro.html')
     else:
         return render(request, 'home/login.html', {'formLogin': formularioLogin})
+    
 
-
+'''
 
 def cadastre(request):
     
-    form = Usuarios(request.POST or None)
+    form = Usuario_Cadastro(request.POST or None)
 
-    if request.method == 'POST':
 
-        username = request.POST['username']
-        first_name = request.POST['nome']
-        email = request.POST['email']
-        password = request.POST['senha']
-        
+    if form.is_valid():
 
-        hasher = PBKDF2PasswordHasher()
+            username = request.POST['username']
+            first_name = request.POST['nome']
+            email = request.POST['email']
+            password = request.POST['senha']
 
-        enc_password = hasher.encode(password=password,
-                                  salt='salt',
-                                  iterations=50000)
-        
 
-                
-        Usuarios.objects.create(
-            username = username,
-            nome = first_name,            
-            email = email,
-            senha = enc_password 
-            ) 
+            hasher = PBKDF2PasswordHasher()
 
-        messages.add_message(request, messages.SUCCESS, 'Usuario cadastrado com sucesso ')
-        return render(request, 'home/cadastro.html', {'form': form  })
-        
+            enc_password = hasher.encode(password=password,
+                                      salt='salt',
+                                      iterations=50000)
+
+
+
+            AuthUser.objects.create(
+                username = username,
+                first_name = first_name,
+                email = email,
+                password = enc_password
+                )
+
+            messages.add_message(request, messages.SUCCESS, 'Usuario cadastrado com sucesso ')
+            return render(request, 'home/cadastro.html', {'form': form  })
+
     else:
         
         return render(request, 'home/cadastro.html', {'form': form})
@@ -90,7 +93,7 @@ def cadastre(request):
 class EmpresasList(ListView):
     model = Empresas
 
-@login_required
+#@login_required
 def index(request):
     Emp = Empresas.objects.all()
     
@@ -124,12 +127,13 @@ def do_logout(request):
     logout(request)
     return render(request, 'home/index.html')
 
+#@login_required
 def validarEmails(request):
     return render(request, 'home/validarEmails.html')    
 
 
 
-@login_required
+#@login_required
 def arquivos(request):
     template = "home/validarEmails.html"
 
@@ -158,7 +162,7 @@ def arquivos(request):
         return render(request, template)
 
 
-@login_required
+#@login_required
 def painel(request):
     template = "home/painel.html"
 

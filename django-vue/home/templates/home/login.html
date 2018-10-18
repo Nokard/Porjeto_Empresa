@@ -2,18 +2,18 @@
 {% block titutlo %} Faça seu login {% endblock %}
 {% block conteudoLogin %}
 
-<form method="POST">
+<form method="POST" action="/LOGIN">
     {% csrf_token %}
 
     <div class="form-group">
         <label>Usuario</label>
-        {{ formLogin.username }}
+        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username" name="username">
         {{ formLogin.username.errors}}
     </div>
 
     <div class="form-group">
         <label>Senha</label>
-        {{ formLogin.senha }}
+        <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Senha" name="senha">
         {{ formLogin.senha.errors}}
     </div>
     <button type="submit" class="btn btn-primary btn-gradient">
@@ -22,7 +22,7 @@
     </button>
     <hr>
     <p class="text-center">
-        Não possui conta ainda ? <a href="/REGISTER">CADASTRE-SE</a>
+        Não possui conta ainda neh ? <a href="/REGISTER">CADASTRE-SE</a>
     </p>
     
 

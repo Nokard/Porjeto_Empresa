@@ -16,8 +16,8 @@ urlpatterns = [
 
     path('INDEX/<int:pk>/', views.listarCnpjView.as_view(), name='emp_detail'),
         
-    #path('LOGIN', LoginView.as_view(), name='login'),
-    path('LOGIN', views.do_login, name='login'),
+    path('LOGIN', LoginView.as_view(), name='login'),
+    #path('LOGIN', views.do_login, name='login'),
 
     path('EMAIL', views.validarEmails, name='ValidarEmails'),
 

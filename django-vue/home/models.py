@@ -174,7 +174,7 @@ class Usuarios(models.Model):
     username = models.CharField(max_length=35, blank=True, null=True)
     nome = models.CharField(max_length=85, blank=True, null=True)
     email = models.CharField(unique=True, max_length=85, blank=True, null=True)
-    senha = models.CharField(max_length=255, blank=True, null=True)
+    password = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False
