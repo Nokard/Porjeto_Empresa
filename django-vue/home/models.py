@@ -39,6 +39,7 @@ class AuthPermission(models.Model):
 
 class AuthUser(models.Model):
     password = models.CharField(max_length=128, blank=True, null=True)
+    confirm_password = models.CharField(max_length=128, blank=True, null=True)
     last_login = models.DateTimeField(blank=True, null=True)
     is_superuser = models.IntegerField(blank=True, null=True)
     username = models.CharField(unique=True, max_length=150, blank=True, null=True)
@@ -46,7 +47,7 @@ class AuthUser(models.Model):
     last_name = models.CharField(max_length=150, blank=True, null=True)
     email = models.CharField(max_length=254, blank=True, null=True)
     is_staff = models.IntegerField(blank=True, null=True)
-    is_active = models.IntegerField(blank=True, null=True)
+    is_active = models.IntegerField(blank=True, null=True, default='1')
     date_joined = models.DateTimeField(blank=True, null=True)
     
     class Meta:

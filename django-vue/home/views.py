@@ -54,39 +54,42 @@ def do_login(request):
 '''
 
 def cadastre(request):
-    
-    form = Usuario_Cadastro(request.POST or None)
+
+    if request.method == 'POST':
+        form = Usuario_Cadastro(request.POST or None)
+
+        if form.is_valid():
 
 
-    if form.is_valid():
+                username = request.POST['username']
+                first_name = request.POST['first_name']
+                email = request.POST['email']
+                password = request.POST['password']
+                confirm_password = request.POST['confirm_password']
 
-            username = request.POST['username']
-            first_name = request.POST['nome']
-            email = request.POST['email']
-            password = request.POST['senha']
+                hasher = PBKDF2PasswordHasher()
 
+                enc_password = hasher.encode(password=password,
+                                          salt='salt',
+                                          iterations=50000)
 
-            hasher = PBKDF2PasswordHasher()
+                AuthUser.objects.create(
+                    username = username,
+                    first_name = first_name,
+                    email = email,
+                    password = enc_password
+                    )
 
-            enc_password = hasher.encode(password=password,
-                                      salt='salt',
-                                      iterations=50000)
+                messages.add_message(request, messages.SUCCESS, 'Usuario cadastrado com sucesso ')
+                return render(request, 'home/cadastro.html', {'form': form  })
+        else:
+            return render(request, 'home/cadastro.html', {'form': form})
 
-
-
-            AuthUser.objects.create(
-                username = username,
-                first_name = first_name,
-                email = email,
-                password = enc_password
-                )
-
-            messages.add_message(request, messages.SUCCESS, 'Usuario cadastrado com sucesso ')
-            return render(request, 'home/cadastro.html', {'form': form  })
 
     else:
-        
+        form = Usuario_Cadastro()
         return render(request, 'home/cadastro.html', {'form': form})
+
 
 
 @login_required

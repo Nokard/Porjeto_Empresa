@@ -8,7 +8,7 @@ from django.contrib.auth import views as auth_views
 app_name = 'home'
 urlpatterns = [
     
-    path('', views.first, name="first" ),
+    path('', views.first, name="first"),
 
     path('INDEX/', views.index, name="index"),
     
