@@ -154,12 +154,14 @@ def arquivos(request):
     if request.method == 'GET':
         return render(request,template)
 
-    try:
-        csv_file = request.FILES['file']
+  
+    csv_file = request.FILES['file']
         
-        if not csv_file.name.endswith('.csv'):
-            messages.add_message(request, messages.error, 'Arquivo não é csv ')
+    if not csv_file.name.endswith('.csv'):
+        messages.add_message(request, messages.error, 'Arquivo não é csv ')
+        return render(request, template)
 
+    try:
         data_set = csv_file.read().decode('UTF-8')
         io_string = io.StringIO(data_set)
         next(io_string)
