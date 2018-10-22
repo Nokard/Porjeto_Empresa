@@ -37,7 +37,7 @@ class Usuario_Cadastro(ModelForm):
     class Meta:
         model = AuthUser
 
-        fields = ['username', 'first_name', 'last_name', 'email', 'password']
+        fields = ['username', 'first_name', 'last_name', 'email', 'password', 'confirm_password',]
 
         widgets = {
 
@@ -79,15 +79,5 @@ class Usuario_Cadastro(ModelForm):
         raise forms.ValidationError("Usuário com esse email já existe ")
 
 
-    def clean_password(self):
-
-        senha1 = self.cleaned_data['password']
-        senha2 = self.cleaned_data['confirm_password']
-
-        try:
-            if senha1 != senha2:
-                raise forms.ValidationError('Senha diferentes! Tente novamente ')
-        except:
-            return self.cleaned_data['password']
 
 

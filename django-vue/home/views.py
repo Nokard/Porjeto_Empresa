@@ -60,28 +60,39 @@ def cadastre(request):
 
         if form.is_valid():
 
-
                 username = request.POST['username']
                 first_name = request.POST['first_name']
                 email = request.POST['email']
                 password = request.POST['password']
                 confirm_password = request.POST['confirm_password']
 
-                hasher = PBKDF2PasswordHasher()
 
-                enc_password = hasher.encode(password=password,
-                                          salt='salt',
-                                          iterations=50000)
+                if password != confirm_password:
+                    messages.add_message(request, messages.ERROR, 'Senhas diferentes, tente novamente. ')
+                    return render(request, 'home/cadastro.html', {'form': form})
 
-                AuthUser.objects.create(
-                    username = username,
-                    first_name = first_name,
-                    email = email,
-                    password = enc_password
-                    )
+                else:
 
-                messages.add_message(request, messages.SUCCESS, 'Usuario cadastrado com sucesso ')
-                return render(request, 'home/cadastro.html', {'form': form  })
+                    hasher = PBKDF2PasswordHasher()
+
+                    enc_password = hasher.encode(password=password,
+                                              salt='salt',
+                                              iterations=50000)
+
+                    confirm_password = '1'
+
+
+                    AuthUser.objects.create(
+                        username = username,
+                        first_name = first_name,
+                        email = email,
+                        password = enc_password,
+                        confirm_password = confirm_password,
+                        )
+
+                    messages.add_message(request, messages.SUCCESS, 'Usuario cadastrado com sucesso ')
+                    return render(request, 'home/cadastro.html', {'form': form  })
+
         else:
             return render(request, 'home/cadastro.html', {'form': form})
 
@@ -153,8 +164,6 @@ def arquivos(request):
         io_string = io.StringIO(data_set)
         next(io_string)
 
-
-        
 
         email = csv.reader(io_string, delimiter=',', quotechar="|")
         

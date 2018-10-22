@@ -29,16 +29,15 @@
     <div class="form-group">
         <label>Confirme sua senha</label>
         {{ form.confirm_password}}
-        {{ form.password.errors }}
+        {{ form.confirm_password.errors }}
     </div>
           
     {% if messages %}
     <div class="alert alert-success">
             {% for msg in messages %}
 
-            <strong>Sucesso!</strong> {{msg.message }}</a>.
-            <a href="/LOGIN">Clique para fazer o login</a>
-            
+                <strong>{{msg.message }}</strong>
+
             {% endfor %}
             
           </div>
